@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     const fetchdata = async () => {
       const { data } = await axios.get(
-        `http://www.omdbapi.com/?s=${searchValue}&apikey=d976f86c`
+        `https://www.omdbapi.com/?s=${searchValue}&apikey=d976f86c`
       );
       setMovies(data.Search);
     };
@@ -23,7 +23,9 @@ function App() {
 
   useEffect(() => {
     const movieFavorite = JSON.parse(localStorage.getItem("react-movie-app"));
-    setFavorites(movieFavorite);
+    if (movieFavorite) {
+      setFavorites(movieFavorite);
+    }
   }, []);
 
   const saveToLocalStorage = (items) => {
@@ -36,7 +38,7 @@ function App() {
   };
   const removefromFavorite = (movie) => {
     const newFavoriteList = favorites.filter(
-      (favorite) => favorite.imdbID != movie.imdbID
+      (favorite) => favorite.imdbID !== movie.imdbID
     );
     setFavorites(newFavoriteList);
     saveToLocalStorage(newFavoriteList);
